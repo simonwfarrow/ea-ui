@@ -4,7 +4,7 @@
 
     import { Octokit, App } from "octokit";
 
-    const pat = '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';
+    const pat = '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';
 
     function start() {
 
