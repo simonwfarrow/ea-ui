@@ -1,23 +1,63 @@
-<script lang="ts">
+<script lang="ts" xmlns:svelte="http://www.w3.org/1999/html">
 
-    import {goto} from "$app/navigation";
-    import ServiceTree from "../../components/ServiceTree.svelte";
+    import {navStore} from "../../stores/navigation";
+    import {AppBar, AppRail, AppRailTile, AppShell, LightSwitch} from "@skeletonlabs/skeleton";
+    import {goto} from '$app/navigation';
+    import Fa from 'svelte-fa'
+    import { faServer, faDiagramProject, faMagnifyingGlass, faBrain, faFilePen } from '@fortawesome/free-solid-svg-icons'
+    import Query from "../../components/QuerySideBar.svelte";
+    import Flows from "../../components/FlowsSideBar.svelte";
+    import Services from "../../components/ServicesSideBar.svelte";
+    import EditorSideBar from "../../components/EditorSideBar.svelte";
+
+    navStore.subscribe(path => {
+        goto(`/ea/${path}`)
+    })
+
 </script>
 
-
-<div class="drawer drawer-mobile" data-theme="light">
-    <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content flex flex-col items-center justify-center">
-        <slot/>
-
-        <label for="my-drawer-2" class="btn btn-primary drawer-button lg:hidden">Open drawer</label>
-
-    </div>
-    <div class="drawer-side" data-theme="dark">
-        <label for="my-drawer-2" class="drawer-overlay"></label>
-        <div class="p-4">
-            <ServiceTree/>
+<AppShell>
+    <svelte:fragment slot="header">
+        <AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
+            <svelete:fragment slot="lead"><Fa icon={faBrain}/></svelete:fragment>
+            <h3><span class="gradient-heading">Electronic Architect</span></h3>
+            <svelete:fragment slot="trail"><LightSwitch /></svelete:fragment>
+        </AppBar>
+    </svelte:fragment>
+    <svelte:fragment slot="sidebarLeft">
+        <div class="grid grid-cols-[auto_1fr] h-full bg-surface-50-900-token border-r border-surface-500/30 {$$props.class ?? ''}">
+            <AppRail selected={navStore}>
+                <svelte:fragment slot="lead">
+                    <!-- AppRailTiles -->
+                </svelte:fragment>
+                    <AppRailTile label="Services" title="Services" value={'view/services'}><Fa icon={faServer}/></AppRailTile>
+                    <AppRailTile label="Flows" title="Flows" value={'view/flows'}><Fa icon={faDiagramProject}/></AppRailTile>
+                    <AppRailTile label="Query" title="Query" value={'query'}><Fa icon={faMagnifyingGlass}/></AppRailTile>
+                    <AppRailTile label="Editor" title="Editor" value={'editor'}><Fa icon={faFilePen}/></AppRailTile>
+                <svelte:fragment slot="trail">
+                    <!-- AppRailTiles -->
+                </svelte:fragment>
+            </AppRail>
+            <!-- Nav Links -->
+            {#if $navStore == 'view/services'}
+                <Services/>
+            {/if}
+            {#if $navStore == 'view/flows'}
+                <Flows/>
+            {/if}
+            {#if $navStore == 'query'}
+                <Query/>
+            {/if}
+            {#if $navStore == 'editor'}
+                <EditorSideBar/>
+            {/if}
         </div>
-
-    </div>
-</div>
+    </svelte:fragment>
+    <svelte:fragment slot="sidebarRight"></svelte:fragment>
+    <svelte:fragment slot="pageHeader"></svelte:fragment>
+    <!-- Router Slot -->
+    <slot />
+    <!-- ---- / ---- -->
+    <svelte:fragment slot="pageFooter"></svelte:fragment>
+    <svelte:fragment slot="footer"></svelte:fragment>
+</AppShell>
