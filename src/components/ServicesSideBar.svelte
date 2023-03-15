@@ -1,10 +1,5 @@
 <script lang="ts">
-    import {selectedServiceKey, serviceStore} from "../stores/service";
-
-
-    function setService(key: string){
-        selectedServiceKey.set(key);
-    }
+    import {serviceStore} from "../stores/service";
 
 </script>
 
@@ -15,8 +10,8 @@
     <nav class="list-nav">
         <ul>
             {#each Object.entries($serviceStore) as [key,service]}
-                <li on:click={setService(key)} on:keypress>
-                    <a href="/ea/view/services" data-sveltekit-preload-data="hover">
+                <li>
+                    <a href="/ea/view/services/{key}" data-sveltekit-preload-data="hover">
                         <span class="flex-auto">{key}</span>
                         <span class="badge variant-filled-secondary">{service.status}</span>
                     </a>

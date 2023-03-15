@@ -18,7 +18,9 @@
             for (const [key, service] of Object.entries($serviceStore)) {
                 services.push(service);
             }
-            flowImgUrl = getPlantUrl(createFlowSequenceView($flowStore[key],services));
+            createFlowSequenceView($flowStore[key],services).then(flow => {
+                flowImgUrl = getPlantUrl(flow);
+            })
         }
     })
 

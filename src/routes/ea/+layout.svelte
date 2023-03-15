@@ -9,9 +9,15 @@
     import Flows from "../../components/FlowsSideBar.svelte";
     import Services from "../../components/ServicesSideBar.svelte";
     import EditorSideBar from "../../components/EditorSideBar.svelte";
+    import {page} from "$app/stores";
 
     navStore.subscribe(path => {
-        goto(`/ea/${path}`)
+        if ($page.params.slug!=null){
+            goto(`/ea/${path}/${$page.params.slug}`)
+        } else {
+            goto(`/ea/${path}`)
+        }
+
     })
 
 </script>

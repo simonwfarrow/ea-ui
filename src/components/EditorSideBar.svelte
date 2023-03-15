@@ -1,6 +1,6 @@
 <script lang="ts">
     import Fa from 'svelte-fa'
-    import { faCirclePlus, faFileCirclePlus, faCloudArrowUp } from '@fortawesome/free-solid-svg-icons'
+    import { faCirclePlus, faFileCirclePlus, faCloudArrowUp, faCloudArrowDown} from '@fortawesome/free-solid-svg-icons'
 
 </script>
 
@@ -24,6 +24,10 @@
     <div  class="text-primary-700 dark:text-primary-500 font-bold uppercase px-4">Commands</div>
     <!-- Navigation List -->
     <div class="grid grid-cols-1 gap-4 text-center text-xs font-bold">
+        <button class="btn variant-filled">
+            <span>Load Flow</span>
+            <span class="badge bg-white/10 dark:bg-black/10"><Fa icon={faCloudArrowDown}/></span>
+        </button>
         <button class="btn variant-filled">
             <span>Save Flow</span>
             <span class="badge bg-white/10 dark:bg-black/10"><Fa icon={faCloudArrowUp}/></span>
