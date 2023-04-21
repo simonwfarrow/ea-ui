@@ -15,7 +15,7 @@
             <!-- Header -->
             <header>
                 <div class="flex justify-center">
-                    <img src="ea-ui/images/ea.jpg" class="max-w-sm rounded-lg shadow-2xl" />
+                    <img src="/ea-ui/images/ea.jpg" class="max-w-sm rounded-lg shadow-2xl" />
                 </div>
             </header>
             <!-- Body -->

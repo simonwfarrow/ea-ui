@@ -12,7 +12,7 @@
         <ul>
             {#each Object.entries($flowStore) as [key,flow]}
                 <li>
-                    <a href="/ea/view/flows/{key}" data-sveltekit-preload-data="hover">
+                    <a href="/ea-ui/ea/view/flows/{key}" data-sveltekit-preload-data="hover">
                         <span class="flex-auto">{flow.name}</span>
                         <span class="badge variant-filled-secondary">{flow.tags}</span>
                     </a>

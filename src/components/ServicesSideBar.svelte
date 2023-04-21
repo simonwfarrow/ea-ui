@@ -11,7 +11,7 @@
         <ul>
             {#each Object.entries($serviceStore) as [key,service]}
                 <li>
-                    <a href="/ea/view/services/{key}" data-sveltekit-preload-data="hover">
+                    <a href="/ea-ui/ea/view/services/{key}" data-sveltekit-preload-data="hover">
                         <span class="flex-auto">{key}</span>
                         <span class="badge variant-filled-secondary">{service.status}</span>
                     </a>
