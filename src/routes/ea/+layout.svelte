@@ -13,9 +13,9 @@
 
     navStore.subscribe(path => {
         if ($page.params.slug!=null){
-            goto(`/ea/${path}/${$page.params.slug}`)
+            goto(`ea/${path}/${$page.params.slug}`)
         } else {
-            goto(`/ea/${path}`)
+            goto(`ea/${path}`)
         }
 
     })
