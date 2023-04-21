@@ -17,7 +17,7 @@ const config = {
 			entries: ['/ea/editor','/ea/query', '/ea/view/flows', '/ea/view/services']
 		},
 		paths: {
-			base: dev ? '' : process.env.BASE_PATH,
+			base: '/ea-ui',
 		}
 	}
 };
