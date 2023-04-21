@@ -2,6 +2,8 @@
     import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
     import '@skeletonlabs/skeleton/styles/all.css';
     import "../app.css";
+    import "../define_self.js";
+    import "whatwg-fetch";
 
     import {onMount} from "svelte";
     import {ServicesRepositoryGitHub} from "@electronic-architect/ea-services/src/index";
@@ -15,6 +17,7 @@
 
     onMount(async () => {
         loadingMsg = 'Connecting to GitHub...'
+
         let conn = getGitHubGraphQLConn('https://github.worldpay.com/api' ,`Bearer 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`);
         const config = {
             connection: conn,

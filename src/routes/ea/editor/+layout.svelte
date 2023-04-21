@@ -1,18 +1,21 @@
-<script>
+<script lang="ts">
     import {CodeBlock, Tab, TabGroup, focusTrap} from "@skeletonlabs/skeleton";
     import {serviceStore} from "../../../stores/service";
     import {onMount} from "svelte";
     import Fa from 'svelte-fa'
     import { faCirclePlus, faFileCirclePlus } from '@fortawesome/free-solid-svg-icons'
-    import {FlowDescriptor, Step, Actor, Interaction} from "@electronic-architect/ea-flows/src/index";
+    import {Step, Actor, Interaction, FlowDescriptor} from "@electronic-architect/ea-flows/src/index";
     import jsYaml  from "js-yaml";
+
     import { getPlantUrl, createFlowSequenceView} from "@electronic-architect/ea-diagrams";
+
+
     import hljs from 'highlight.js';
     import 'highlight.js/styles/github-dark.css';
     import { storeHighlightJs } from '@skeletonlabs/skeleton';
     import FlowStepExplorer from "../../../components/FlowStepExplorer.svelte";
+    import {flowStore, selectedFlowKey} from "../../../stores/flow";
     import {page} from "$app/stores";
-    import {flowStore} from "../../../stores/flow";
 
     storeHighlightJs.set(hljs);
 
@@ -22,7 +25,7 @@
     let selectedProducer;
     let selectedConsumer;
     let iIndex = 1;
-    let flow = new FlowDescriptor();
+    let flow;
     let stepDescription;
     let flowImgUrl = '';
     let flowPuml= '';
@@ -38,17 +41,28 @@
             serviceSelect.push({id: sIndex++, text: sKey})
         }
 
-        flow = $flowStore[$page.params.slug];
-        //setup a new flow
-        /*flow.id = 'test';
-        flow.name = 'test';
-        flow.description = 'test';
-        flow.steps = [];*/
+        if ($page.params.slug!=null){
+            flow = $flowStore[$page.params.slug];
+        } else {
+            //setup a new flow
+            flow = new FlowDescriptor();
+            flow.id = 'test';
+            flow.name = 'test';
+            flow.description = 'test';
+            flow.steps = [];
+        }
 
     })
 
+    selectedFlowKey.subscribe(key => {
+        console.log(key);
+        flow = $flowStore.get(key);
+    })
+
     $: {
-        render(flow);
+        if (flow!=null) {
+            render(flow);
+        }
     }
 
     // when a user chooses a producer or consumer load the interactions into the interaction select array
@@ -56,7 +70,7 @@
 
     function updateInteractions(producer, consumer) {
 
-        //looks complex, we are adding every interaction from the selected producer and consumers and there endpoints
+        //looks complex, we are adding every interaction from the selected producer and consumers and their endpoints
         //we store the endpoint name, interaction name etc. in the object added to the select array so we can pull out later on
         interactionSelect = [];
         if (producer != null && consumer != null) {
@@ -150,7 +164,7 @@
         <div class="card p-4 m-4 w-full max-h-96">
             <div class="p-4 grid grid-cols-1 md:grid-cols-2 gap-4" use:focusTrap={true}>
 
-                <label class="label">
+                <label class="label col-span-2">
                     <span>Description</span>
                     <input class="input p-1" type="text" bind:value={stepDescription}/>
                 </label>
@@ -198,7 +212,7 @@
                     {:else if editTabs === 1}
                         <CodeBlock language="md" code={flowPuml} />
                     {:else if editTabs === 2}
-                        <FlowStepExplorer bind:flow={flow} on:stepsUpdated={render}/>
+                        <FlowStepExplorer bind:steps={flow.steps}/>
                     {/if}
                 </svelte:fragment>
             </TabGroup>
@@ -225,3 +239,5 @@
 
     </div>
 </div>
+
+<slot/>

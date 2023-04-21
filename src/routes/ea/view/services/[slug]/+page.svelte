@@ -1,7 +1,9 @@
 
 <script lang="ts">
 
-    import { createServiceInteractionView, getPlantUrl} from "@electronic-architect/ea-diagrams";
+
+    import {createServiceInteractionView, getPlantUrl} from "@electronic-architect/ea-diagrams";
+
     import { serviceStore} from "../../../../../stores/service";
     import {page} from "$app/stores";
 
