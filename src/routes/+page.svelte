@@ -1,17 +1,6 @@
-<script lang="ts">
-
-    import { goto } from '$app/navigation';
-
-    function start() {
-        goto('/ea-ui/ea')
-    }
-
-</script>
-
-
 <div class="container mx-auto">
     <div class="grid h-screen place-items-center">
-        <a href="ea" class="card card-hover overflow-hidden" style="cursor: pointer">
+        <a href="/ea-ui/ea" class="card card-hover overflow-hidden" style="cursor: pointer">
             <!-- Header -->
             <header>
                 <div class="flex justify-center">
