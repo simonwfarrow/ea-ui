@@ -3,7 +3,7 @@
     import { goto } from '$app/navigation';
 
     function start() {
-        goto('ea')
+        goto('ea-ui/ea')
     }
 
 </script>
