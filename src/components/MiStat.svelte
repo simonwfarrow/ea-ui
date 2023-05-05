@@ -3,7 +3,7 @@
   export let value;
 </script>
 
-<div class="card variant-glass-primary p-4 shadow !text-white mb-10">
+<div class="card variant-glass-primary p-4 shadow !text-white mb-4">
   <dl class="list-dl">
     <div>
       <span class="badge bg-primary-500">&nbsp;i&nbsp;</span>
