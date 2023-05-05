@@ -10,8 +10,20 @@
   } from 'chart.js';
   import Chart from 'chart.js/auto';
   import { onMount } from 'svelte';
-  import { derived, writable } from 'svelte/store';
   import MiStat from '../../../components/MiStat.svelte';
+  import { allADRs } from '../../../stores/mi/mi-store';
+  import ADR from '../../../stores/mi/adr';
+  import {
+    openADRs,
+    closedADRs,
+    meanTimeToResolution,
+    acceptedADRs,
+    adoptedADRs,
+    identifiedADRs,
+    proposedADRs,
+    provingADRs,
+    rejectedADRs,
+  } from '../../../stores/mi/mi-store';
 
   ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, Colors);
 
@@ -25,88 +37,6 @@
   let ctx;
   let chartCanvas;
 
-  const allADRs = writable([]);
-
-  class ADR {
-    title: string;
-    state: string;
-    createdAtUTC: Date;
-    closedAtUTC: Date;
-    isOpen: boolean;
-    isClosed: boolean;
-    ttrInDays: number = 0;
-    milestone: string;
-    isIdentified:boolean;
-    isProposed:boolean;
-    isAccepted: boolean;
-    isBeingProved: boolean;
-    isAdopted: boolean;
-    isRejected: boolean;
-
-    constructor(dto) {
-      this.title = dto.title;
-      this.state = dto.state;
-      this.createdAtUTC = new Date(dto.created_at);
-      this.closedAtUTC = new Date(dto.closed_at);
-      this.isOpen = this.state === 'open';
-      this.isClosed = this.state === 'closed';
-      this.ttrInDays = this.calculateTimeToResolutionInDays();
-      this.milestone = dto.milestone ? dto.milestone.title : '';
-      this.isIdentified = this.milestone === 'Identified';
-      this.isProposed = this.milestone === 'Proposed';
-      this.isAccepted = this.milestone === 'Accepted';
-      this.isBeingProved = this.milestone === 'Prove';
-      this.isAdopted = this.milestone === 'Adopted';
-      this.isRejected = this.milestone === 'Rejected';
-    }
-
-    calculateTimeToResolutionInDays(): number {
-      if (this.isOpen) {
-        return 0;
-      }
-      return (this.closedAtUTC.getTime() - this.createdAtUTC.getTime()) / (24 * 3600 * 1000);
-    }
-  }
-
-  const openADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isOpen).length;
-  });
-
-  const closedADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isClosed).length;
-  });
-
-  const identifiedADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isIdentified).length;
-  });
-
-  const proposedADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isProposed).length;
-  });
-
-  const acceptedADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isAccepted).length;
-  });
-
-  const provingADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isBeingProved).length;
-  });
-
-  const adoptedADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isAdopted).length;
-  });
-
-  const rejectedADRs = derived(allADRs, ($allADRs) => {
-    return $allADRs.filter(adr => adr.isRejected).length;
-  });
-
-  const meanTimeToResolution = derived(allADRs, ($allADRs) => {
-    const closedADRs = $allADRs.filter(adr => adr.isClosed);
-    if (closedADRs.length === 0) {
-      return 0;
-    }
-    return Math.round(closedADRs.reduce((total, adr) => total + adr.ttrInDays, 0) / closedADRs.length);
-  });
 
   function mountPieChart() {
     const chartOptions = {
