@@ -6,10 +6,10 @@
 
 {#each $queryResults as result}
   {#if result.isServiceDescriptor }
-    <QueryResultService serviceDescriptor={result.item} />
+    <QueryResultService storeKey={result.storeKey} serviceDescriptor={result.item} />
   {:else}
     {#if result.isFlowDescriptor }
-      <QueryResultFlow flowDescriptor={result.item} />
+      <QueryResultFlow storeKey={result.storeKey} flowDescriptor={result.item} />
     {/if}
   {/if}
 {/each}

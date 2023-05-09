@@ -21,21 +21,20 @@ export const queryResultsStore = writable<Map<string, FlowDescriptor>>(new Map()
 
 export const queryResults = derived([queryTerms, serviceStore, flowStore], ([$queryTerms, $serviceStore, $flowStore]) => {
   const results: QueryResult[] = [];
-  for (let [key, serviceDescriptor] of Object.entries($serviceStore)) {
+  for (let [storeKey, serviceDescriptor] of Object.entries($serviceStore)) {
     const serviceDescriptorAsString = JSON.stringify(serviceDescriptor);
-    if (stringMatchesQueryTerms(key, $queryTerms)
+    if (stringMatchesQueryTerms(storeKey, $queryTerms)
       || stringMatchesQueryTerms(serviceDescriptorAsString, $queryTerms)) {
-      const result = QueryResult.fromServiceDescriptor(serviceDescriptor);
+      const result = QueryResult.fromServiceDescriptor(storeKey, serviceDescriptor);
       results.push(result);
     }
   }
 
   for (let [key, flowDescriptor] of Object.entries($flowStore)) {
     const flowDescriptorAsString = JSON.stringify(flowDescriptor);
-    console.log(`${flowDescriptor.name} => ${flowDescriptorAsString.toLowerCase().indexOf('proxying')}`);
     if (stringMatchesQueryTerms(key, $queryTerms)
       || stringMatchesQueryTerms(flowDescriptorAsString, $queryTerms)) {
-      const result = QueryResult.fromFlowDescriptor(flowDescriptor);
+      const result = QueryResult.fromFlowDescriptor(key, flowDescriptor);
       results.push(result);
     }
   }

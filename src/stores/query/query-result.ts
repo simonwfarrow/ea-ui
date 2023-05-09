@@ -2,24 +2,31 @@ import type ADR from '../mi/adr';
 import type { ServiceDescriptor  } from "@electronic-architect/ea-services/src/@types/sdTypes";
 import type { FlowDescriptor  } from "@electronic-architect/ea-flows/src/@types/fdTypes";
 
+enum QueryResultType {
+  ServiceDescriptor,
+  FlowDescriptor
+}
+
 export default class QueryResult {
-  type:string;
+  type:QueryResultType;
+  storeKey:string;
   item: ServiceDescriptor | FlowDescriptor;
   isServiceDescriptor: boolean;
   isFlowDescriptor: boolean;
 
-  static fromServiceDescriptor(serviceDescriptor:ServiceDescriptor):QueryResult {
-    return new QueryResult('service-descriptor', serviceDescriptor);
+  static fromServiceDescriptor(storeKey:string, serviceDescriptor:ServiceDescriptor):QueryResult {
+    return new QueryResult(QueryResultType.ServiceDescriptor, storeKey, serviceDescriptor);
   }
 
-  static fromFlowDescriptor(flowDescriptor:FlowDescriptor):QueryResult {
-    return new QueryResult('flow-descriptor', flowDescriptor);
+  static fromFlowDescriptor(storeKey:string, flowDescriptor:FlowDescriptor):QueryResult {
+    return new QueryResult(QueryResultType.FlowDescriptor, storeKey, flowDescriptor);
   }
 
-  constructor(type:string, item: ServiceDescriptor | FlowDescriptor) {
+  constructor(type:QueryResultType, storeKey:string, item: ServiceDescriptor | FlowDescriptor) {
     this.type = type;
+    this.storeKey = storeKey;
     this.item = item;
-    this.isServiceDescriptor = (type === 'service-descriptor');
+    this.isServiceDescriptor = (type === QueryResultType.ServiceDescriptor);
     this.isFlowDescriptor = !this.isServiceDescriptor;
   }
 }
