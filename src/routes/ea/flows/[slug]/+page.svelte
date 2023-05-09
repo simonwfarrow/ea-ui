@@ -8,11 +8,7 @@
 
     let flow: FlowDescriptor;
 
-    onMount(async() => {
-        if ($page.params.slug!=null) {
-            flow = $flowStore[$page.params.slug];
-        }
-    })
+    $: flow = $flowStore[$page.params.slug];
 
 </script>
 
