@@ -14,7 +14,7 @@
         if ($page.params.slug!=null) {
             if ($serviceStore[$page.params.slug]!=null) {
                 //serviceImgUrl = getPlantUrl(createServiceInteractionView($serviceStore[$page.params.slug]))
-                serviceName = $page.params.slug.toLowerCase().replace(' ','');
+                serviceName = $page.params.slug.toLowerCase().replaceAll(' ','');
 
             }
         }
