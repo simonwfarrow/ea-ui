@@ -4,7 +4,7 @@
     import {AppBar, AppRail, AppRailTile, AppShell, LightSwitch} from "@skeletonlabs/skeleton";
     import {goto} from '$app/navigation';
     import Fa from 'svelte-fa'
-    import { faServer, faDiagramProject, faMagnifyingGlass, faBrain, faFilePen } from '@fortawesome/free-solid-svg-icons'
+    import { faServer, faDiagramProject, faMagnifyingGlass, faBrain, faFilePen, faPieChart } from '@fortawesome/free-solid-svg-icons'
     import Query from "../../components/QuerySideBar.svelte";
     import Flows from "../../components/FlowsSideBar.svelte";
     import Services from "../../components/ServicesSideBar.svelte";
@@ -40,6 +40,7 @@
                     <AppRailTile label="Flows" title="Flows" value={'view/flows'}><Fa icon={faDiagramProject}/></AppRailTile>
                     <AppRailTile label="Query" title="Query" value={'query'}><Fa icon={faMagnifyingGlass}/></AppRailTile>
                     <AppRailTile label="Editor" title="Editor" value={'editor'}><Fa icon={faFilePen}/></AppRailTile>
+                    <AppRailTile label="MI" title="Management Information stats" value={'mi'}><Fa icon={faPieChart}/></AppRailTile>
                 <svelte:fragment slot="trail">
                     <!-- AppRailTiles -->
                 </svelte:fragment>
