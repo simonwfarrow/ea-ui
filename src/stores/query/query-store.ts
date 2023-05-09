@@ -3,16 +3,24 @@ import { derived, writable } from 'svelte/store';
 import { flowStore } from '../flow';
 import { serviceStore } from '../service';
 import QueryResult from './query-result';
+import QueryTermMatch from './query-term-match';
 
-function stringMatchesQueryTerms(stringToSearch: string, queryTerms: string[]) {
+function lookupQueryTermMatches(stringToSearch: string, queryTerms: string[]) {
+  const queryTermMatches = [];
+
   for (const term of queryTerms) {
-    if (stringToSearch.toLowerCase().indexOf(term.toLowerCase()) === -1) {
-      return false;
+    const regExString = `"([^"]+)":"(([^"]*)${term}([^"]*))"`;
+    const regEx = new RegExp(regExString,"i");
+    let regExMatches = stringToSearch.match(regEx);
+    if (regExMatches) {
+      const queryTermMatch = new QueryTermMatch(term, regExMatches);
+      queryTermMatches.push(queryTermMatch);
+    } else {
+      return [];
     }
   }
 
-  // returning true only if previous loop did not return false and there are query terms
-  return queryTerms.length > 0;
+  return queryTermMatches;
 }
 
 export let queryTerms = writable<string[]>([]);
@@ -23,18 +31,18 @@ export const queryResults = derived([queryTerms, serviceStore, flowStore], ([$qu
   const results: QueryResult[] = [];
   for (let [storeKey, serviceDescriptor] of Object.entries($serviceStore)) {
     const serviceDescriptorAsString = JSON.stringify(serviceDescriptor);
-    if (stringMatchesQueryTerms(storeKey, $queryTerms)
-      || stringMatchesQueryTerms(serviceDescriptorAsString, $queryTerms)) {
-      const result = QueryResult.fromServiceDescriptor(storeKey, serviceDescriptor);
+    const matches = lookupQueryTermMatches(serviceDescriptorAsString, $queryTerms);
+    if (matches.length > 0) {
+      const result = QueryResult.fromServiceDescriptor(storeKey, serviceDescriptor, matches);
       results.push(result);
     }
   }
 
-  for (let [key, flowDescriptor] of Object.entries($flowStore)) {
+  for (let [storeKey, flowDescriptor] of Object.entries($flowStore)) {
     const flowDescriptorAsString = JSON.stringify(flowDescriptor);
-    if (stringMatchesQueryTerms(key, $queryTerms)
-      || stringMatchesQueryTerms(flowDescriptorAsString, $queryTerms)) {
-      const result = QueryResult.fromFlowDescriptor(key, flowDescriptor);
+    const matches = lookupQueryTermMatches(flowDescriptorAsString, $queryTerms);
+    if (matches.length > 0) {
+      const result = QueryResult.fromFlowDescriptor(storeKey, flowDescriptor, matches);
       results.push(result);
     }
   }
