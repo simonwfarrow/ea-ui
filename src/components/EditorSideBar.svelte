@@ -1,28 +1,39 @@
 <script lang="ts">
-    import Fa from 'svelte-fa'
-    import { faCirclePlus, faFileCirclePlus, faCloudArrowUp, faCloudArrowDown} from '@fortawesome/free-solid-svg-icons'
+    import {flowStore, selectedFlowKey} from "../stores/flow";
+    import {FlowDescriptor} from "@electronic-architect/ea-flows/src/index";
+    import {onMount} from "svelte";
+
+    let flow: FlowDescriptor;
+
+    selectedFlowKey.subscribe(key => {
+        flow = $flowStore[key];
+    })
+
+    onMount(async() => {
+        flow = new FlowDescriptor();
+        flow.name = 'test';
+    })
 
 </script>
 
 <section class="p-4 pb-20 space-y-4 overflow-y-auto">
 
     <!-- Title -->
-    <div  class="text-primary-700 dark:text-primary-500 font-bold uppercase px-4">Steps</div>
+    <div  class="text-primary-700 dark:text-primary-500 font-bold uppercase px-4">Info</div>
     <!-- Navigation List -->
     <div class="grid grid-cols-1 gap-4 text-center text-xs font-bold">
-        <button class="btn variant-filled">
-            <span>New Step</span>
-            <span class="badge bg-white/10 dark:bg-black/10"><Fa icon={faCirclePlus}/></span>
-        </button>
-        <button class="btn variant-filled">
-            <span>New Reference</span>
-            <span class="badge bg-white/10 dark:bg-black/10"><Fa icon={faFileCirclePlus}/></span>
-        </button>
-
+        <label class="label col-span-2">
+            <span>Name</span>
+            <input class="input p-1" type="text" bind:value={flow.name}/>
+        </label>
+        <label class="label col-span-2">
+            <span>Description</span>
+            <input class="input p-1" type="text" bind:value={flow.description}/>
+        </label>
     </div>
 
-    <div  class="text-primary-700 dark:text-primary-500 font-bold uppercase px-4">Commands</div>
-    <!-- Navigation List -->
+    <!--<div  class="text-primary-700 dark:text-primary-500 font-bold uppercase px-4">Commands</div>
+
     <div class="grid grid-cols-1 gap-4 text-center text-xs font-bold">
         <button class="btn variant-filled">
             <span>Load Flow</span>
@@ -33,7 +44,7 @@
             <span class="badge bg-white/10 dark:bg-black/10"><Fa icon={faCloudArrowUp}/></span>
         </button>
 
-    </div>
+    </div>-->
 
 </section>
 

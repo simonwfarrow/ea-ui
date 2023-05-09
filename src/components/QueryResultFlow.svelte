@@ -13,7 +13,7 @@
       <div class="flex-row list-nav">
         <div><Fa icon={faDiagramProject} /></div>
         <div>
-          <a href="/ea-ui/ea/view/flows/{storeKey}" data-sveltekit-preload-data="hover">
+          <a href="/ea-ui/ea/flows/{storeKey}" data-sveltekit-preload-data="hover">
             <span class="flex-auto">{flowDescriptor.name}</span>
             <span class="badge variant-filled-secondary">{flowDescriptor.tags}</span>
           </a>

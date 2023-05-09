@@ -13,7 +13,7 @@
       <div class="flex-row list-nav">
         <div><Fa icon={faServer} /></div>
           <div>
-            <a href="/ea-ui/ea/view/services/{storeKey}" data-sveltekit-preload-data="hover">
+            <a href="/ea-ui/ea/services/{storeKey}" data-sveltekit-preload-data="hover">
               <span class="flex-auto">{serviceDescriptor.name}</span>
               <span class="badge variant-filled-secondary">{serviceDescriptor.status}</span>
             </a>

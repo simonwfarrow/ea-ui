@@ -8,15 +8,12 @@
     import Query from "../../components/QuerySideBar.svelte";
     import Flows from "../../components/FlowsSideBar.svelte";
     import Services from "../../components/ServicesSideBar.svelte";
-    import EditorSideBar from "../../components/EditorSideBar.svelte";
     import {page} from "$app/stores";
 
     navStore.subscribe(path => {
-        if ($page.params.slug!=null){
-            goto(`/ea-ui/ea/${path}/${$page.params.slug}`)
-        } else {
+
             goto(`/ea-ui/ea/${path}`)
-        }
+
 
     })
 
@@ -36,27 +33,23 @@
                 <svelte:fragment slot="lead">
                     <!-- AppRailTiles -->
                 </svelte:fragment>
-                    <AppRailTile label="Services" title="Services" value={'view/services'}><Fa icon={faServer}/></AppRailTile>
-                    <AppRailTile label="Flows" title="Flows" value={'view/flows'}><Fa icon={faDiagramProject}/></AppRailTile>
+                    <AppRailTile label="Services" title="Services" value={'services'}><Fa icon={faServer}/></AppRailTile>
+                    <AppRailTile label="Flows" title="Flows" value={'flows'}><Fa icon={faDiagramProject}/></AppRailTile>
                     <AppRailTile label="Query" title="Query" value={'query'}><Fa icon={faMagnifyingGlass}/></AppRailTile>
-                    <AppRailTile label="Editor" title="Editor" value={'editor'}><Fa icon={faFilePen}/></AppRailTile>
                     <AppRailTile label="MI" title="Management Information stats" value={'mi'}><Fa icon={faPieChart}/></AppRailTile>
                 <svelte:fragment slot="trail">
                     <!-- AppRailTiles -->
                 </svelte:fragment>
             </AppRail>
             <!-- Nav Links -->
-            {#if $navStore == 'view/services'}
+            {#if $navStore == 'services'}
                 <Services/>
             {/if}
-            {#if $navStore == 'view/flows'}
+            {#if $navStore == 'flows'}
                 <Flows/>
             {/if}
             {#if $navStore == 'query'}
                 <Query/>
-            {/if}
-            {#if $navStore == 'editor'}
-                <EditorSideBar/>
             {/if}
         </div>
     </svelte:fragment>
