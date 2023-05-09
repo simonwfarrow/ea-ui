@@ -1,16 +1,23 @@
 <script lang="ts">
-  export let flowDescriptor: FlowDescriptor;
   import { FlowDescriptor } from '@electronic-architect/ea-flows/src/index';
   import { faDiagramProject } from '@fortawesome/free-solid-svg-icons';
   import Fa from 'svelte-fa';
+
+  export let storeKey: string;
+  export let flowDescriptor: FlowDescriptor;
 </script>
 
 <div class="card variant-glass-primary p-4 shadow !text-white mb-4">
   <dl class="list-dl">
     <div>
-      <div class="flex-row">
+      <div class="flex-row list-nav">
         <div><Fa icon={faDiagramProject} /></div>
-        <div>{flowDescriptor.name}</div>
+        <div>
+          <a href="/ea-ui/ea/view/flows/{storeKey}" data-sveltekit-preload-data="hover">
+            <span class="flex-auto">{flowDescriptor.name}</span>
+            <span class="badge variant-filled-secondary">{flowDescriptor.tags}</span>
+          </a>
+        </div>
       </div>
     </div>
   </dl>
