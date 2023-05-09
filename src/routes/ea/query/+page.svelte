@@ -1,20 +1,15 @@
 <script lang="ts">
-  import {serviceStore} from "../../../stores/service";
-  import {flowStore} from "../../../stores/flow";
-  let serviceArray = [];
+  import QueryResultFlow from '../../../components/QueryResultFlow.svelte';
+  import QueryResultService from '../../../components/QueryResultService.svelte';
+  import { queryResults } from '../../../stores/query/query-store.js';
 </script>
 
-{#each serviceArray as result}
-  <div class="card variant-glass-primary p-4 shadow !text-white">
-    <dl class="list-dl">
-      <div>
-        <span class="badge bg-primary-500">💀</span>
-        <span class="flex-auto">
-			<dt>Title</dt>
-			<dd>Description</dd>
-		</span>
-      </div>
-      <!-- ... -->
-    </dl>
-  </div>
+{#each $queryResults as result}
+  {#if result.isServiceDescriptor }
+    <QueryResultService serviceDescriptor={result.item} />
+  {:else}
+    {#if result.isFlowDescriptor }
+      <QueryResultFlow flowDescriptor={result.item} />
+    {/if}
+  {/if}
 {/each}
