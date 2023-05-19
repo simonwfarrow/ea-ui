@@ -1,6 +1,6 @@
 <script lang="ts">
     import {serviceStore} from "../stores/service";
-
+    import { base } from '$app/paths';
 </script>
 
 <section class="p-4 pb-20 space-y-4 overflow-y-auto">
@@ -11,7 +11,7 @@
         <ul>
             {#each Object.entries($serviceStore) as [key,service]}
                 <li>
-                    <a href="/ea-ui/ea/services/{key}" data-sveltekit-preload-data="hover">
+                    <a href="{base}/ea/services/{key}" data-sveltekit-preload-data="hover">
                         <span class="flex-auto">{key}</span>
                         <span class="badge variant-filled-secondary">{service.status}</span>
                     </a>

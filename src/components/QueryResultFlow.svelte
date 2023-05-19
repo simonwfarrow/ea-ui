@@ -8,6 +8,7 @@
   export let storeKey: string;
   export let flowDescriptor: FlowDescriptor;
   export let matches: QueryTermMatch[];
+  import { base } from '$app/paths';
 </script>
 
 <div class="card variant-glass-primary p-4 shadow !text-white mb-4">
@@ -18,7 +19,7 @@
           <Fa icon={faDiagramProject} />
         </div>
         <div>
-          <a href="/ea-ui/ea/flows/{storeKey}" data-sveltekit-preload-data="hover">
+          <a href="{base}/ea/flows/{storeKey}" data-sveltekit-preload-data="hover">
             <span class="flex-auto">{flowDescriptor.name}</span>
             <span class="badge variant-filled-secondary">{flowDescriptor.tags}</span>
           </a>

@@ -4,15 +4,17 @@
     import {AppBar, AppRail, AppRailTile, AppShell, LightSwitch} from "@skeletonlabs/skeleton";
     import {goto} from '$app/navigation';
     import Fa from 'svelte-fa'
-    import { faServer, faDiagramProject, faMagnifyingGlass, faBrain, faFilePen, faPieChart } from '@fortawesome/free-solid-svg-icons'
+    import { faServer, faDiagramProject, faMagnifyingGlass,  faPieChart, faFilePen } from '@fortawesome/free-solid-svg-icons'
     import Query from "../../components/QuerySideBar.svelte";
     import Flows from "../../components/FlowsSideBar.svelte";
     import Services from "../../components/ServicesSideBar.svelte";
+    import DocsSideBar from "../../components/DocsSideBar.svelte";
     import {page} from "$app/stores";
+    import { base } from '$app/paths';
 
     navStore.subscribe(path => {
 
-            goto(`/ea-ui/ea/${path}`)
+            goto(`${base}/ea/${path}`)
 
 
     })
@@ -22,7 +24,7 @@
 <AppShell>
     <svelte:fragment slot="header">
         <AppBar gridColumns="grid-cols-3" slotDefault="place-self-center" slotTrail="place-content-end">
-            <svelete:fragment slot="lead"><Fa icon={faBrain}/></svelete:fragment>
+            <svelete:fragment slot="lead"></svelete:fragment>
             <h3><span class="gradient-heading">Electronic Architect</span></h3>
             <svelete:fragment slot="trail"><LightSwitch /></svelete:fragment>
         </AppBar>
@@ -37,6 +39,7 @@
                     <AppRailTile label="Flows" title="Flows" value={'flows'}><Fa icon={faDiagramProject}/></AppRailTile>
                     <AppRailTile label="Query" title="Query" value={'query'}><Fa icon={faMagnifyingGlass}/></AppRailTile>
                     <AppRailTile label="MI" title="Management Information stats" value={'mi'}><Fa icon={faPieChart}/></AppRailTile>
+                    <AppRailTile label="Docs" title="Documentation" value={'docs'}><Fa icon={faFilePen}/></AppRailTile>
                 <svelte:fragment slot="trail">
                     <!-- AppRailTiles -->
                 </svelte:fragment>
@@ -50,6 +53,9 @@
             {/if}
             {#if $navStore == 'query'}
                 <Query/>
+            {/if}
+            {#if $navStore == 'docs'}
+                <DocsSideBar/>
             {/if}
         </div>
     </svelte:fragment>

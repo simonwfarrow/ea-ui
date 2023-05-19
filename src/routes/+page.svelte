@@ -1,10 +1,13 @@
+<script>
+    import { base } from '$app/paths';
+</script>
 <div class="container mx-auto">
     <div class="grid h-screen place-items-center">
-        <a href="/ea-ui/ea" class="card card-hover overflow-hidden" style="cursor: pointer">
+        <a href="{base}/ea" class="card card-hover overflow-hidden" style="cursor: pointer">
             <!-- Header -->
             <header>
                 <div class="flex justify-center">
-                    <img src="/ea-ui/images/ea.jpg" class="max-w-sm rounded-lg shadow-2xl" />
+                    <img src="{base}/images/ea.jpg" class="max-w-sm rounded-lg shadow-2xl" />
                 </div>
             </header>
             <!-- Body -->

@@ -1,6 +1,7 @@
 <script lang="ts">
 
     import {flowStore} from "../stores/flow";
+    import { base } from '$app/paths';
 
 </script>
 
@@ -12,7 +13,7 @@
         <ul>
             {#each Object.entries($flowStore) as [key,flow]}
                 <li>
-                    <a href="/ea-ui/ea/flows/{key}" data-sveltekit-preload-data="hover">
+                    <a href="{base}/ea/flows/{key}" data-sveltekit-preload-data="hover">
                         <span class="flex-auto">{flow.name}</span>
                         <span class="badge variant-filled-secondary">{flow.tags}</span>
                     </a>

@@ -17,7 +17,7 @@ const config = {
 			entries: ['/ea/editor','/ea/query', '/ea/flows', '/ea/services']
 		},
 		paths: {
-			base: '/ea-ui',
+			base: '/pages/access-for-ecom-doc/electronic-architect',
 		}
 	}
 };

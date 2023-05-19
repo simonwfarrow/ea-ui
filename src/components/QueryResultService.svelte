@@ -8,6 +8,8 @@
   export let storeKey: string;
   export let serviceDescriptor: ServiceDescriptor;
   export let matches: QueryTermMatch[];
+  import { base } from '$app/paths';
+
 </script>
 <div class="card variant-glass-primary p-4 shadow !text-white mb-4">
   <dl class="list-dl">
@@ -17,7 +19,7 @@
           <Fa icon={faServer} />
         </div>
         <div>
-          <a href="/ea-ui/ea/services/{storeKey}" data-sveltekit-preload-data="hover">
+          <a href="{base}/ea/services/{storeKey}" data-sveltekit-preload-data="hover">
             <span class="flex-auto">{serviceDescriptor.name}</span>
             <span class="badge variant-filled-secondary">{serviceDescriptor.status}</span>
           </a>

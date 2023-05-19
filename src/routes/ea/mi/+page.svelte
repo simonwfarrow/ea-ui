@@ -27,7 +27,7 @@
 
   ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, Colors);
 
-  const BEARER_TOKEN = '';
+  const BEARER_TOKEN = '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';
   const apiBaseUrl = 'https://github.worldpay.com/api/v3/repos/access-for-ecom-doc/adrs';
   const apiHeaders = {
     headers: {
